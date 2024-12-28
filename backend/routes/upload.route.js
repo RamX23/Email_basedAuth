@@ -2,10 +2,27 @@ import { downloadFile, uploadFile, getUserFiles } from '../controllers/upload.co
 import { verifyToken } from '../middleware/verifyToken.js'
 import router from './auth.route.js'
 import multer from 'multer';
+import cloudinary from 'cloudinary';
+
+
+cloudinary.config({
+    cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+    api_key: process.env.CLOUDINARY_API_KEY,
+    api_secret: process.env.CLOUDINARY_API_SECRET
+});
+
+const storage = multer.diskStorage({
+    destination: (req, file, cb) => {
+        cb(null, 'uploads/');
+    },
+    filename: (req, file, cb) => {
+        const ext = file.mimetype === 'application/pdf' ? '.pdf' : '.jpg'; 
+        cb(null, Date.now() + ext); // Save with unique name and correct extension
+    }
+});
 
 const upload = multer({
-    dest: 'uploads/', 
-    limits: { fileSize: 10 * 1024 * 1024 },
+    storage: storage,
     fileFilter: (req, file, cb) => {
         if (file.mimetype.startsWith('image/') || file.mimetype === 'application/pdf') {
             cb(null, true); 
@@ -14,6 +31,7 @@ const upload = multer({
         }
     }
 });
+
 
 
 router.post('/upload', verifyToken, upload.single('file'), uploadFile);
