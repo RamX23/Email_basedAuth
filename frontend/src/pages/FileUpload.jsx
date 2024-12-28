@@ -62,26 +62,39 @@ const FileUpload = () => {
 
   const handleDownload = async (fileId) => {
     try {
+      // Request file from the server
       const response = await axios({
         url: `/api/download/${fileId}`,
         method: 'GET',
         responseType: 'blob',
         headers: { 'Authorization': `Bearer ${localStorage.getItem('token')}` }
       });
+  
+      // Ensure the response contains data
+      if (response.data) {
 
-      const blob = new Blob([response.data]);
-      const url = window.URL.createObjectURL(blob);
-      const link = document.createElement('a');
-      link.href = url;
-      link.setAttribute('download', `file-${fileId}`);
-      document.body.appendChild(link);
-      link.click();
-      link.remove();
+        const filename = response.headers['content-disposition']?.split('filename=')[1] || `file-${fileId}.pdf`;
+ 
+        const blob = new Blob([response.data], { type: response.headers['content-type'] });
+  
+        // Create a link element for downloading
+        const url = window.URL.createObjectURL(blob);
+        const link = document.createElement('a');
+        link.href = url;
+        link.setAttribute('download', filename); // Set the filename dynamically
+        document.body.appendChild(link);
+        link.click(); 
+        link.remove(); 
+        window.URL.revokeObjectURL(url);
+      } else {
+        throw new Error('No file data received');
+      }
     } catch (error) {
       console.error('Error downloading file:', error);
-      toast.error("Error downloading file");
+      toast.error('Error downloading file');
     }
   };
+  
 
   return (
     <>
