@@ -20,6 +20,7 @@ const LoginPage = () => {
 	};
 
 	return (
+		<div className="flex justify-center align-items-center vh-100">
 		<motion.div
 			initial={{ opacity: 0, y: 20 }}
 			animate={{ opacity: 1, y: 0 }}
@@ -62,6 +63,7 @@ const LoginPage = () => {
 					</motion.button>
 				</form>
 			</div>
+				<Link to='/forgot-password' className="flex align-items-center justify-start mx-5 mb-2">Forget Password</Link>
 			<div className='px-8 py-4 bg-gray-900 bg-opacity-50 flex justify-center'>
 				<p className='text-sm text-gray-400'>
 					Don't have an account?{" "}
@@ -71,6 +73,7 @@ const LoginPage = () => {
 				</p>
 			</div>
 		</motion.div>
+		</div>
 	);
 };
 export default LoginPage;

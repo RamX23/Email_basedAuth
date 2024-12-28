@@ -49,6 +49,23 @@ const findUser = async (data) => {
     }
 };
 
+const getUser=async (email)=>{
+    try{
+        const query = `SELECT *
+        FROM users 
+        WHERE email=$1`;
+       const result = await client.query(query, [email]);
+        if (result.rows.length > 0) {
+            return result.rows[0]; 
+        } else {
+            console.error("User dosent exists",email);
+            return null;
+        }
+    }catch(error){
+        console.eror("Error occured while getting user data from db");
+    }
+}
+
 const VerifyUser = async (token,email) => {
     try {
         const query = `
@@ -73,7 +90,7 @@ const download_File=async(userId,fileId)=>{
     const query=`SELECT * FROM files WHERE id = $1 AND user_id = $2`
     try{
        const res=await client.query(query,[userId,fileId]);
-       if(resule.rowCount===0){
+       if(res.rowCount===0){
         throw new Error("File Dosent Exists")
        }
        console.log("File Downloaded successfully")
@@ -89,15 +106,18 @@ const getFiles=async(userId)=>{
     if(result.rows.count===0){
         throw new Error('No Files found for this user')
     }
-    console.log("Files fetched Successfully.")
+    console.log("Files fetched Successfully.",userId)
     return result
  }catch(err){
-    console.log("Error occured while fetching files from db.");
+    console.error("Error occured while fetching files from db.");
+    throw err;
  }
 }
 
 
 
+
+
 export default client;
 
-export {findUser,insertUser,VerifyUser,download_File,getFiles}
+export {findUser,insertUser,VerifyUser,download_File,getFiles,getUser}

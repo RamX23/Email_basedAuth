@@ -23,7 +23,7 @@ const FileUpload = () => {
     try {
       await FileUpload(formData);
       toast.success("File uploaded successfully");
-      fetchFilesFromServer();  // Fetch updated file list after upload
+      fetchFilesFromServer();  
       setFile(null);
     } catch (err) {
       console.log("Error occurred while uploading file", err);
@@ -35,19 +35,17 @@ const FileUpload = () => {
     try {
       await FetchFiles();
       
-      // Access the files from the Zustand store
       const { files } = useAuthStore.getState();  
       console.log("Files from state:", files);
 
       if (files) {
-        // Assuming each file object has 'filename' and 'id' properties
         const updatedFiles = files.map((file) => ({
           id: file.id, 
           filename: file.filename, 
           downloadUrl: `/api/download/${file.id}`
         }));
 
-        setFiles(updatedFiles);  // Set the updated files to local state
+        setFiles(updatedFiles); 
       } else {
         console.error('No files found in the response');
         setFiles([]);
@@ -86,22 +84,23 @@ const FileUpload = () => {
   };
 
   return (
-    <div className="file-upload-container min-h-screen items-center justify-center relative overflow-hidden'">
-      <Navbar/>
+    <>
+      <Navbar />
+    <div className="file-upload-container min-h-screen items-center justify-center relative overflow-hidden mt-5">
       <h1 className='h1 text-info flex justify-center'>Upload and Manage Your Files</h1>
 
-      <form onSubmit={handleSubmit} className="upload-form flex justify-center m-4 p-2 px-5">
-        <input type="file" className='w-120 btn btn-secondary flex justify-end p-1 px-5 mx-5' onChange={handleFileChange} />
+      <form onSubmit={handleSubmit} className="upload-form flex justify-center m-4 p-2 px-5 vw-20">
+        <input type="file" className='w-120 btn btn-secondary flex justify-end p-1 px-5 mx-3vw' onChange={handleFileChange} />
         <button type="submit" className='btn btn-primary mx-5' disabled={isLoading}>Upload</button>
       </form>
 
-      <h3 className='h3 text-info px-5'>Your Files</h3>
-      <div className="files-list p-5">
+      <div className="files-list p-5 flex flex-col items-center justify-center">
+      <h2 className='h2 text-info px-5 flex mb-4'>Your Files</h2>
         {files.length > 0 ? (
           files.map((file) => (
-            <div key={file.id} className="file-item flex p-1 w-150 justify-between border border-primary my-2 bg-light">
-              <p className='fs-5 text-secondary-emphasis flex align-center'>{file.filename}</p>
-              <button className="btn btn-primary mx-5" onClick={() => handleDownload(file.id)} >
+            <div key={file.id} className="file-item flex p-1 w-150 justify-between border border-primary mb-2 bg-light p-2 col-8">
+              <p className='fs-5 text-secondary-emphasis flex align-center fs-3'>{file.filename}</p>
+              <button className="btn btn-primary mx-5 bg-lg" onClick={() => handleDownload(file.id)} >
                 Download
               </button>
             </div>
@@ -111,6 +110,7 @@ const FileUpload = () => {
         )}
       </div>
     </div>
+    </>
   );
 };
 

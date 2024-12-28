@@ -47,8 +47,8 @@ const EmailVerificationPage = () => {
 		const verificationCode = code.join("");
 		try {
 			await verifyEmail(verificationCode);
-			navigate("/");
 			toast.success("Email verified successfully");
+			navigate("/login");
 		} catch (error) {
 			console.log(error);
 		}
@@ -62,6 +62,7 @@ const EmailVerificationPage = () => {
 	}, [code]);
 
 	return (
+		<div className="flex justify-center align-items-center vh-100">
 		<div className='max-w-md w-full bg-gray-800 bg-opacity-50 backdrop-filter backdrop-blur-xl rounded-2xl shadow-xl overflow-hidden'>
 			<motion.div
 				initial={{ opacity: 0, y: -50 }}
@@ -102,6 +103,8 @@ const EmailVerificationPage = () => {
 				</form>
 			</motion.div>
 		</div>
+		
+</div>
 	);
 };
 export default EmailVerificationPage;

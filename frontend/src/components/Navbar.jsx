@@ -13,11 +13,11 @@ const Navbar = () => {
   };
 
   return (
-    <nav className="navbar bg-primary m-5 rounded-pill px-4">
+    <nav className="navbar bg-primary px-4 py-3 fs-4">
       <div className="container-fluid ">
-        <a className="navbar-brand">File Manager</a>
+        <a className="navbar-brand fs-3">File Manager</a>
         <form onSubmit={logoutHandler}>
-          <button className="btn bg-light btn-hover-success" type="submit">Logout</button>
+          <button className="btn bg-light btn-hover-success btn-lg" type="submit">Logout</button>
         </form>
       </div>
     </nav>

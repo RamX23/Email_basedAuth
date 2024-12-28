@@ -12,7 +12,7 @@ const ResetPasswordPage = () => {
 	const { resetPassword, error, isLoading, message } = useAuthStore();
 
 	const { token } = useParams();
-	const navigate = useNavigate();
+	const navigate = useNavigate("/login");
 
 	const handleSubmit = async (e) => {
 		e.preventDefault();

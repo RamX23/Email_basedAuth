@@ -4,7 +4,6 @@ import FloatingShape from "./components/FloatingShape";
 import SignUpPage from "./pages/SignUpPage";
 import LoginPage from "./pages/LoginPage";
 import EmailVerificationPage from "./pages/EmailVerificationPage";
-import DashboardPage from "./pages/DashboardPage";
 import ForgotPasswordPage from "./pages/ForgotPasswordPage";
 import ResetPasswordPage from "./pages/ResetPasswordPage";
 
@@ -54,7 +53,6 @@ function App() {
 		<>
 
 		<div
-			className='min-h-screen flex items-center justify-center relative overflow-hidden'
 		>
 
 
@@ -63,7 +61,7 @@ function App() {
 					path='/'
 					element={
 						<ProtectedRoute>
-							<DashboardPage />
+							<FileUpload />
 						</ProtectedRoute>
 					}
 				/>
