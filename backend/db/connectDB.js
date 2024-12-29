@@ -13,7 +13,7 @@ const {Client}=pkg;
 // })
 
 const client = new Client({
-    connectionString: "postgresql://file_management_app_user:Fn8KT0Hq8hB232Mz0qeobcKPSM4nAHpN@dpg-ctnsccq3esus73a4kjq0-a.oregon-postgres.render.com/file_management_app", // Add this in your .env
+    connectionString: "postgresql://postgres:tUJQvbhixvxcaAsNGXGJswQyAiTbtLMs@autorack.proxy.rlwy.net:52167/railway", // Add this in your .env
     ssl: { rejectUnauthorized: false }, 
 });
 
