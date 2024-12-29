@@ -17,7 +17,7 @@ app.use(cors());
 
 app.use(express.json()); // allows us to parse incoming requests:req.body
 app.use(cookieParser()); // allows us to parse incoming cookies
-
+app.use(express.urlencoded({ extended: true }));
 app.use("/api/auth", authRoutes);
 app.use('/api/auth', fileRoutes);
 
