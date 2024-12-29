@@ -29,6 +29,10 @@ app.use('/api/auth', fileRoutes);
 // 		res.sendFile(path.resolve(__dirname, "frontend", "dist", "index.html"));
 // 	});
 // }
+app.get('api/auth/test', (req, res) => {
+  res.status(200).json({ message: 'Backend is working!' });
+});
+
 app.get('/',(req,res)=>{
 	res.send("Hello! from serve")
 })
