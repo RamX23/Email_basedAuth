@@ -1,16 +1,34 @@
 import pkg from 'pg';
 const {Client}=pkg;
 
-const client=new Client({
-    host:"localhost",
-    user:"postgres",
-    port: 5432,
-    password:"root",
-    database:"project"
-})
-client.connect(()=>{
-    console.log("DB connected successfully");
-})
+// const client=new Client({
+//     host:"localhost",
+//     user:"postgres",
+//     port: 5432,
+//     password:"root",
+//     database:"project"
+// })
+// client.connect(()=>{
+//     console.log("DB connected successfully");
+// })
+
+const client = new Client({
+    connectionString: "postgresql://file_management_app_user:Fn8KT0Hq8hB232Mz0qeobcKPSM4nAHpN@dpg-ctnsccq3esus73a4kjq0-a.oregon-postgres.render.com/file_management_app", // Add this in your .env
+    ssl: { rejectUnauthorized: false }, 
+});
+
+
+const connectToDb = async () => {
+    try {
+        await client.connect(); 
+        console.log("DB connected successfully");
+    } catch (error) {
+        console.error("Error occurred while connecting to the DB", error);
+        process.exit(1); 
+    }
+};
+
+
 const insertUser = async (data) => {
     const { username, email, password, verificationToken, verificationTokenExpiresAt } = data;
 
